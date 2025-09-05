@@ -1,6 +1,6 @@
 {
-  "name": "triviaapi-react-app",
   "homepage": "https://acolyer13.github.io/triviaapi-react-app/",
+  "name": "triviaapi-react-app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
