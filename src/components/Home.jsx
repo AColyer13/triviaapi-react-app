@@ -23,23 +23,10 @@ const Home = ({ formData, onChange, onSubmit, error }) => {
         <h1>React Trivia Quiz</h1>
         <p style={{marginBottom: '0.5em'}}>Welcome to the Open Trivia Quiz! Test your knowledge and see how many questions you can get right.</p>
         <ul className="instructions">
-          <li>Enter your first name.</li>
           <li>Select a category and difficulty.</li>
-          <li>Click Start to get your question!</li>
+          <li>Click Start to begin the quiz!</li>
         </ul>
         <form className="quiz-form" onSubmit={onSubmit} style={{width: '100%', maxWidth: '22rem'}}>
-          <div className="form-group">
-            <label htmlFor="name">First Name:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={onChange}
-              autoComplete="off"
-              placeholder="Your first name"
-            />
-          </div>
           <div className="form-group">
             <label htmlFor="category">Category:</label>
             <select

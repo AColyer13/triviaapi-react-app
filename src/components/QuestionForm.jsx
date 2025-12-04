@@ -17,7 +17,7 @@ function shuffle(array) {
   return arr;
 }
 
-const QuestionForm = ({ questionData, onAnswer, selectedAnswer, setSelectedAnswer, error, loading, apiError }) => {
+const QuestionForm = ({ questionData, onAnswer, selectedAnswer, setSelectedAnswer, error, loading, apiError, currentIndex, total }) => {
   // Combine and shuffle answers only once per question
   const answers = useMemo(() => {
     if (!questionData) return [];
@@ -28,6 +28,12 @@ const QuestionForm = ({ questionData, onAnswer, selectedAnswer, setSelectedAnswe
     return shuffle(all);
   }, [questionData]);
 
+  // Handle answer selection - immediately submit when clicked
+  const handleAnswerSelect = (answer) => {
+    setSelectedAnswer(answer);
+    onAnswer(answer);
+  };
+
   if (loading) return <div>Loading question...</div>;
   if (apiError) return <div className="error">{apiError}</div>;
   if (!questionData) return null;
@@ -35,8 +41,8 @@ const QuestionForm = ({ questionData, onAnswer, selectedAnswer, setSelectedAnswe
   return (
     <div className="liquid-glass-container">
       <div className="liquid-glass-content">
-        <h2>Quiz Question</h2>
-        <form onSubmit={onAnswer} style={{width: '100%', maxWidth: '22rem'}}>
+        <h2>Quiz Question {currentIndex + 1} of {total}</h2>
+        <div style={{width: '100%', maxWidth: '22rem'}}>
           <div className="question-text" style={{marginBottom: '1.2em', fontWeight: 500, fontSize: '1.13rem', textAlign: 'center'}}>
             {decodeHtml(questionData.question)}
           </div>
@@ -48,7 +54,7 @@ const QuestionForm = ({ questionData, onAnswer, selectedAnswer, setSelectedAnswe
                   name="answer"
                   value={ans}
                   checked={selectedAnswer === ans}
-                  onChange={() => setSelectedAnswer(ans)}
+                  onChange={() => handleAnswerSelect(ans)}
                   style={{marginRight: '0.8em'}}
                 />
                 {decodeHtml(ans)}
@@ -56,8 +62,7 @@ const QuestionForm = ({ questionData, onAnswer, selectedAnswer, setSelectedAnswe
             ))}
           </div>
           {error && <div className="error">{error}</div>}
-          <button type="submit">Submit Answer</button>
-        </form>
+        </div>
       </div>
     </div>
   );

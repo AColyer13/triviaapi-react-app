@@ -1,26 +1,19 @@
 import React from 'react';
 
-// Helper to decode HTML entities
-function decodeHtml(html) {
-  const txt = document.createElement('textarea');
-  txt.innerHTML = html;
-  return txt.value;
-}
-
-const Results = ({ userName, isCorrect, correctAnswer, onRestart }) => {
+const Results = ({ score, total, onRestart }) => {
   return (
     <div className="liquid-glass-container">
       <div className="liquid-glass-content">
-        <h2>Results</h2>
-        {isCorrect ? (
-          <p style={{fontWeight: 500, fontSize: '1.13rem', color: '#27ae60'}}>🎉 Great job, {userName}! You answered correctly!</p>
+        <h2>Quiz Complete!</h2>
+        <p style={{fontWeight: 500, fontSize: '1.13rem'}}>You scored {score} out of {total} questions correctly.</p>
+        {score === total ? (
+          <p style={{color: '#27ae60'}}>🎉 Perfect score! Excellent job!</p>
+        ) : score >= total / 2 ? (
+          <p style={{color: '#f39c12'}}>Good effort! Keep practicing to improve.</p>
         ) : (
-          <>
-            <p style={{fontWeight: 500, fontSize: '1.13rem', color: '#e74c3c'}}>Sorry, {userName}, that's not correct.</p>
-            <p style={{marginTop: '0.5em'}}>The correct answer was: <strong>{decodeHtml(correctAnswer)}</strong></p>
-          </>
+          <p style={{color: '#e74c3c'}}>Better luck next time! Try again.</p>
         )}
-        <button onClick={onRestart}>Try Another Question</button>
+        <button onClick={onRestart}>Take Another Quiz</button>
       </div>
     </div>
   );
